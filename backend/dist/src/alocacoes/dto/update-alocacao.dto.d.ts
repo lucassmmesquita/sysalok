@@ -1,0 +1,36 @@
+export declare class UpdateAlocacaoDto {
+    projetoId?: string;
+    perfilProfissionalId?: string;
+    squad?: string;
+    origem?: string;
+    mes01?: number;
+    mes02?: number;
+    mes03?: number;
+    mes04?: number;
+    mes05?: number;
+    mes06?: number;
+    mes07?: number;
+    mes08?: number;
+    mes09?: number;
+    mes10?: number;
+    mes11?: number;
+    mes12?: number;
+    mes13?: number;
+    mes14?: number;
+    mes15?: number;
+    mes16?: number;
+    mes17?: number;
+    mes18?: number;
+    mes19?: number;
+    mes20?: number;
+    mes21?: number;
+    mes22?: number;
+    mes23?: number;
+    mes24?: number;
+    mes25?: number;
+    mes26?: number;
+    mes27?: number;
+    mes28?: number;
+    mes29?: number;
+    mes30?: number;
+}

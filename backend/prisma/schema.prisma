@@ -1,0 +1,168 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id          String    @id @default(uuid())
+  nome        String
+  cnpj        String    @unique
+  responsavel String?
+  contato     String?
+  endereco    String?
+  projetos    Projeto[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Projeto {
+  id          String   @id @default(uuid())
+  nome        String
+  codigo      String   @unique
+  descricao   String?
+  dataInicio  DateTime
+  dataFim     DateTime?
+  status      String // Ex: "Em Andamento", "Concluído", "Cancelado"
+  clienteId   String
+  cliente     Cliente  @relation(fields: [clienteId], references: [id])
+  alocacoes   Alocacao[]
+  viagens     Viagem[]
+  rubricas    Rubrica[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PerfilProfissional {
+  id            String      @id @default(uuid())
+  nome          String      @unique // Ex: "Desenvolvedor Senior", "Gerente de Projetos"
+  vinculo       String?     // Ex: "CLT", "PJ"
+  remuneracao   Decimal?
+  custoMensal   Decimal?    // Custo base, pode ser sobrescrito por CustoRH
+  valorHora     Decimal?    // Valor hora base
+  alocacoes     Alocacao[]
+  custosRH      CustoRH[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+// Para "Custo variável por perfil e por mês"
+model CustoRH {
+  id                  String              @id @default(uuid())
+  perfilProfissionalId String
+  perfilProfissional  PerfilProfissional @relation(fields: [perfilProfissionalId], references: [id])
+  mes                 Int // 1-12
+  ano                 Int
+  custoMensal         Decimal
+  valorHora           Decimal
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  @@unique([perfilProfissionalId, mes, ano])
+}
+
+model Alocacao {
+  id                  String              @id @default(uuid())
+  projetoId           String
+  projeto             Projeto             @relation(fields: [projetoId], references: [id])
+  perfilProfissionalId String
+  perfilProfissional  PerfilProfissional @relation(fields: [perfilProfissionalId], references: [id])
+  squad               String?
+  origem              String?             // Ex: "Interno", "Externo"
+  mes01               Decimal? @default(0)
+  mes02               Decimal? @default(0)
+  mes03               Decimal? @default(0)
+  mes04               Decimal? @default(0)
+  mes05               Decimal? @default(0)
+  mes06               Decimal? @default(0)
+  mes07               Decimal? @default(0)
+  mes08               Decimal? @default(0)
+  mes09               Decimal? @default(0)
+  mes10               Decimal? @default(0)
+  mes11               Decimal? @default(0)
+  mes12               Decimal? @default(0)
+  mes13               Decimal? @default(0)
+  mes14               Decimal? @default(0)
+  mes15               Decimal? @default(0)
+  mes16               Decimal? @default(0)
+  mes17               Decimal? @default(0)
+  mes18               Decimal? @default(0)
+  mes19               Decimal? @default(0)
+  mes20               Decimal? @default(0)
+  mes21               Decimal? @default(0)
+  mes22               Decimal? @default(0)
+  mes23               Decimal? @default(0)
+  mes24               Decimal? @default(0)
+  mes25               Decimal? @default(0)
+  mes26               Decimal? @default(0)
+  mes27               Decimal? @default(0)
+  mes28               Decimal? @default(0)
+  mes29               Decimal? @default(0)
+  mes30               Decimal? @default(0)
+  totalAlocado        Decimal? // Calculado
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Viagem {
+  id                String   @id @default(uuid())
+  projetoId         String
+  projeto           Projeto  @relation(fields: [projetoId], references: [id])
+  descricaoVisita   String?
+  quantidadePessoas Int
+  quantidadeDias    Int
+  valorDiaria       Decimal
+  totalDiarias      Decimal? // Calculado (quantidadeDias * valorDiaria * quantidadePessoas)
+  valorPassagem     Decimal?
+  totalGeral        Decimal? // Calculado (totalDiarias + valorPassagem)
+  origem            String?
+  destino           String?
+  tipoTransporte    String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Rubrica {
+  id              String   @id @default(uuid())
+  projetoId       String
+  projeto         Projeto  @relation(fields: [projetoId], references: [id])
+  categoriaCusto  String   // Ex: "RH", "Viagem", "Outros"
+  descricao       String?
+  valor           Decimal
+  mes             Int? 
+  ano             Int?
+  dataReferencia  DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  GESTOR
+  COLABORADOR
+}
+
+model Usuario {
+  id          String    @id @default(uuid())
+  nome        String
+  email       String    @unique
+  senha       String    
+  role        UserRole  @default(COLABORADOR)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Log {
+  id        String   @id @default(uuid())
+  timestamp DateTime @default(now())
+  level     String   // Ex: "INFO", "ERROR", "WARN"
+  message   String
+  meta      Json?    
+  createdAt DateTime @default(now())
+}
+

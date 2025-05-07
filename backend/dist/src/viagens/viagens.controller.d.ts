@@ -1,0 +1,87 @@
+import { ViagensService } from "./viagens.service";
+import { CreateViagemDto } from "./dto/create-viagem.dto";
+import { UpdateViagemDto } from "./dto/update-viagem.dto";
+export declare class ViagensController {
+    private readonly viagensService;
+    constructor(viagensService: ViagensService);
+    create(createViagemDto: CreateViagemDto): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        projetoId: string;
+        origem: string | null;
+        descricaoVisita: string | null;
+        quantidadePessoas: number;
+        quantidadeDias: number;
+        valorDiaria: import("@prisma/client/runtime/library").Decimal;
+        valorPassagem: import("@prisma/client/runtime/library").Decimal | null;
+        destino: string | null;
+        tipoTransporte: string | null;
+        totalDiarias: import("@prisma/client/runtime/library").Decimal | null;
+        totalGeral: import("@prisma/client/runtime/library").Decimal | null;
+    }>;
+    findAll(): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        projetoId: string;
+        origem: string | null;
+        descricaoVisita: string | null;
+        quantidadePessoas: number;
+        quantidadeDias: number;
+        valorDiaria: import("@prisma/client/runtime/library").Decimal;
+        valorPassagem: import("@prisma/client/runtime/library").Decimal | null;
+        destino: string | null;
+        tipoTransporte: string | null;
+        totalDiarias: import("@prisma/client/runtime/library").Decimal | null;
+        totalGeral: import("@prisma/client/runtime/library").Decimal | null;
+    }[]>;
+    findOne(id: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        projetoId: string;
+        origem: string | null;
+        descricaoVisita: string | null;
+        quantidadePessoas: number;
+        quantidadeDias: number;
+        valorDiaria: import("@prisma/client/runtime/library").Decimal;
+        valorPassagem: import("@prisma/client/runtime/library").Decimal | null;
+        destino: string | null;
+        tipoTransporte: string | null;
+        totalDiarias: import("@prisma/client/runtime/library").Decimal | null;
+        totalGeral: import("@prisma/client/runtime/library").Decimal | null;
+    }>;
+    update(id: string, updateViagemDto: UpdateViagemDto): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        projetoId: string;
+        origem: string | null;
+        descricaoVisita: string | null;
+        quantidadePessoas: number;
+        quantidadeDias: number;
+        valorDiaria: import("@prisma/client/runtime/library").Decimal;
+        valorPassagem: import("@prisma/client/runtime/library").Decimal | null;
+        destino: string | null;
+        tipoTransporte: string | null;
+        totalDiarias: import("@prisma/client/runtime/library").Decimal | null;
+        totalGeral: import("@prisma/client/runtime/library").Decimal | null;
+    }>;
+    remove(id: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        projetoId: string;
+        origem: string | null;
+        descricaoVisita: string | null;
+        quantidadePessoas: number;
+        quantidadeDias: number;
+        valorDiaria: import("@prisma/client/runtime/library").Decimal;
+        valorPassagem: import("@prisma/client/runtime/library").Decimal | null;
+        destino: string | null;
+        tipoTransporte: string | null;
+        totalDiarias: import("@prisma/client/runtime/library").Decimal | null;
+        totalGeral: import("@prisma/client/runtime/library").Decimal | null;
+    }>;
+}
