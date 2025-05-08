@@ -38,7 +38,9 @@ export class UsuariosController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(@Body() loginDto: Pick<CreateUsuarioDto, 'email' | 'senha'>) {
+    console.log('Corpo da requisição recebido no controller:', loginDto);
     const user = await this.usuariosService.validateUser(loginDto.email, loginDto.senha);
+    console.log(' usuarioControler :', user);
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas');
     }

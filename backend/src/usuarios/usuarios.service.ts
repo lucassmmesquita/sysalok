@@ -102,6 +102,8 @@ export class UsuariosService {
 
   // Basic authentication logic (without JWT for now as per requirements)
   async validateUser(email: string, pass: string): Promise<Omit<Usuario, 'senha'> | null> {
+    console.log(' validateUser email :', email);
+    console.log(' validateUser senha :', pass );
     if (!email || !pass) { // Verifica se email ou senha estão vazios/undefined
       // Lançar erro ou retornar null é uma opção, dependendo da estratégia de tratamento de erro.
       // Lançar UnauthorizedException é mais explícito para o frontend.
@@ -111,7 +113,7 @@ export class UsuariosService {
     }
 
     const user = await this.findByEmail(email);
-
+    console.log(' validateUser user :', user);
     if (!user) {
       // Usuário não encontrado
       // console.warn(`Tentativa de login para usuário não encontrado: ${email}`);
@@ -126,6 +128,7 @@ export class UsuariosService {
     }
 
     const isPasswordMatching = await bcrypt.compare(pass, user.senha);
+    console.log(' isPasswordMatching :', isPasswordMatching);
 
     if (isPasswordMatching) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

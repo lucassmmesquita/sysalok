@@ -97,10 +97,13 @@ let UsuariosService = class UsuariosService {
         }
     }
     async validateUser(email, pass) {
+        console.log(' validateUser email :', email);
+        console.log(' validateUser senha :', pass);
         if (!email || !pass) {
             return null;
         }
         const user = await this.findByEmail(email);
+        console.log(' validateUser user :', user);
         if (!user) {
             return null;
         }
@@ -108,6 +111,7 @@ let UsuariosService = class UsuariosService {
             return null;
         }
         const isPasswordMatching = await bcrypt.compare(pass, user.senha);
+        console.log(' isPasswordMatching :', isPasswordMatching);
         if (isPasswordMatching) {
             const { senha, ...result } = user;
             return result;

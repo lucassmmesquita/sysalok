@@ -38,7 +38,9 @@ let UsuariosController = class UsuariosController {
         return this.usuariosService.remove(id);
     }
     async login(loginDto) {
+        console.log('Corpo da requisição recebido no controller:', loginDto);
         const user = await this.usuariosService.validateUser(loginDto.email, loginDto.senha);
+        console.log(' usuarioControler :', user);
         if (!user) {
             throw new common_1.UnauthorizedException('Credenciais inválidas');
         }
